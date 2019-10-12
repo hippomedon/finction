@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+.sacg{
+	width:100px;
+	height:38px;
+	position:relative;
+    left:-79px;
+    top:0px;
+    zoom:1;
+    filter:alpha(opacity=0);
+    opacity:0;
+    font-size:20px;
+}

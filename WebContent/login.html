@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <style type="text/css">
+      body{
+          margin: 0px ; 
+          width: 100%;
+          height: 100%;
+          background-size:cover;
+          background-image:url("sys/images/bck.jpg") ;
+          background-repeat: no-repeat;
+          overflow: hidden;
+
+      }
+     #logon{
+         width: 540px;
+         height: 350px;
+         border-radius: 5px;
+         border: solid 0px rgba(0,0,0,0.5);
+         box-shadow:rgba(0,0,0,0.5) 5px  5px 3px 3px;
+         text-align: center;
+         margin:173px auto;
+         background-color: white;
+
+     }
+     .logon-top{
+         width: 100%;
+         height: 60px;
+         line-height: 50px;
+         text-align:center;
+         border-bottom:solid 1px rgba(0,0,0,0.5) ;
+     }
+     .logon-do{
+         margin:35px auto;
+     }
+      .logon-min{
+          border: 1px solid #ccc;
+          padding: 10px 70px;
+          border-radius: 3px;
+          padding-left:5px;
+          -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+          -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+          -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+      }
+      .logon-min:focus{
+          border-color: #66afe9;
+          outline: 0;
+          -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+      }
+      .buttons{
+          border: 0px;
+          color: white;
+          padding: 10px 50px;
+          text-align: center;
+          font-size: 16px;
+          background-color: palevioletred;
+          border-radius: 8px;
+          -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+
+      }
+     .buttons:hover {
+         background-color:pink;
+
+     }
+    </style>
+	<script type="text/javascript"src="sys/Js/jquery.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		var username = $.cookie("username");
+		if (username == undefined) {
+			
+		} else {
+			$("#username").val(username);
+		}
+		$("#randomcode").click(function() {
+			$(this).attr("src","randomcode.do?"+Math.random());
+		});
+		$("#verify").keyup(function() { //用户在输入验证码就进行ajax异步请求
+			var ucode = $(this).val();
+			$("#res").empty();
+			$.get("randomcodeajax.do",{"v":"isRandomCodeAjax","ucode":ucode},function(data){
+				$("#res").append($(data)); //将服务器端返回的html追加span标签内
+			},"html");
+		});
+	});
+	</script>
+</head>
+<body>
+    <div id="logon">
+        <form action="login.do" method="post">
+            <div class="logon-top"><h3>账号登录</h3></div>
+            <div class="logon-do">
+                <p> 账号：<input type="text" name="username" placeholder="用户名" class="logon-min" id="username"></p>
+                <p> 密码：<input type="password" name="password" placeholder="密码" class="logon-min"></p>
+                <p><input type="checkbox" name="login" value="ok">一个月内自动登录</p>
+                <p><button type="submit" class="buttons">登录</button></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
